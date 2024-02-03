@@ -1,6 +1,9 @@
 const express = require("express");
+const cors = require("cors");
 const chats = require("./data/dummyChat");
 const app = express();
+
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Hello from backend");
