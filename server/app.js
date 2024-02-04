@@ -4,6 +4,18 @@ const chats = require("./data/dummyChat");
 const app = express();
 
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use((req,res,next)=>{
+  console.log(req.method,req.url,req.body);
+  next();
+})
+
+app.post("/api/auth/login", (req, res) => {
+  console.log(req.body)
+  res.send(req.body)
+});
 
 app.get("/", (req, res) => {
   res.send("Hello from backend");

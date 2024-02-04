@@ -8,6 +8,7 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import OAuthSignIn from "@/components/shared/OAuthSignIn";
+import SignInForm from "@/components/forms/sign-in--form";
 
 export default function SignIn() {
 
@@ -33,7 +34,7 @@ export default function SignIn() {
               </span>
             </div>
           </div>
-          {/* <SignInForm /> */}
+          <SignInForm />
         </CardContent>
         <CardFooter className="flex flex-wrap items-center justify-between gap-2">
           <div className="text-sm text-muted-foreground">
