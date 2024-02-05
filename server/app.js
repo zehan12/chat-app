@@ -13,11 +13,7 @@ app.use((req,res,next)=>{
 })
 
 app.use("/api/auth",require("./routes/auth.route"));
-
-app.post("/api/auth/login", (req, res) => {
-  console.log(req.body)
-  res.send(req.body)
-});
+app.use("/api/user",require("./routes/user.route"));
 
 app.get("/", (req, res) => {
   res.send("Hello from backend");
