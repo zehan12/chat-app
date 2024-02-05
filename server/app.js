@@ -12,6 +12,8 @@ app.use((req,res,next)=>{
   next();
 })
 
+app.use("/api/auth",require("./routes/auth.route"));
+
 app.post("/api/auth/login", (req, res) => {
   console.log(req.body)
   res.send(req.body)

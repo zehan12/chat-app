@@ -7,6 +7,9 @@ const config = {
     url: process.env.DB_URL,
     password: process.env.DB_PASSWORD,
   },
+  jwt: {
+    secret: process.env.JWT_SECRET,
+  },
 };
 
 module.exports = config;
