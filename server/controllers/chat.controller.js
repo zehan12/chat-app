@@ -33,7 +33,7 @@ const createOrRetrieveChat = async (req, res, next) => {
       const chatCreated = await Chat.create({
         chatName: "sender",
         isGroupChat: false,
-        users: [req.user.id, userId],
+        users: [currentUser.id, userId],
       });
       const fullChatConversation = await Chat.findOne({
         _id: chatCreated._id,
@@ -45,4 +45,18 @@ const createOrRetrieveChat = async (req, res, next) => {
   }
 };
 
-module.exports = { createOrRetrieveChat };
+const fetchChat = async (req, res, next) => {
+  const user = req.user;
+  const chats = await Chat.find({ users: { $elemMatch: { $eq: user.id } } })
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password")
+    .populate("latestMessage")
+    .sort({ updatedAt: -1 });
+  const usersChat = await User.populate(chats, {
+    path: "latestMessage.sender",
+    select: "name avatar email",
+  });
+  res.status(200).json(usersChat);
+};
+
+module.exports = { createOrRetrieveChat, fetchChat };
