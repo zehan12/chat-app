@@ -45,7 +45,7 @@ const createOrRetrieveChat = async (req, res, next) => {
   }
 };
 
-const fetchChat = async (req, res, next) => {
+const fetchUsersChat = async (req, res, next) => {
   const user = req.user;
   const chats = await Chat.find({ users: { $elemMatch: { $eq: user.id } } })
     .populate("users", "-password")
@@ -56,7 +56,39 @@ const fetchChat = async (req, res, next) => {
     path: "latestMessage.sender",
     select: "name avatar email",
   });
-  res.status(200).json(usersChat);
+  return res.status(200).json(usersChat);
 };
 
-module.exports = { createOrRetrieveChat, fetchChat };
+const spawnGroupChannel = async (req, res, next) => {
+  const currentUser = req.user;
+  if (!req.body.users || !req.body.name) {
+    return res.status(200).json({ message: "Fill all the fields" });
+  }
+  let users = JSON.parse(req.body.users);
+  if (users.length < 2) {
+    return res
+      .status(400)
+      .json({ message: "More than 2 users are required to form a group chat" });
+  }
+
+  try {
+    const groupChat = await Chat.create({
+      chatName: req.body.name,
+      users,
+      isGroupChat: true,
+      groupAdmin: currentUser.id,
+    });
+    const fetchFullGroupConversation = await Chat.findOne({
+      _id: groupChat._id,
+    })
+      .populate("users", "-password")
+      .populate("groupAdmin", "-password")
+      .lean();
+    console.log(fetchFullGroupConversation,"here")
+    return res.status(200).json(fetchFullGroupConversation);
+  } catch (err) {
+    return res.status(500).json({ message: err.message });
+  }
+};
+
+module.exports = { createOrRetrieveChat, fetchUsersChat, spawnGroupChannel };

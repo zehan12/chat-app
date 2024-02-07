@@ -31,7 +31,7 @@ const optionalAuthentication = async (req, res, next) => {
     ) {
       token = req.headers.authorization.split("Bearer")[1].trim();
       const payload = await jwt.verify(token, config.jwt.secret);
-      req.users = payload;
+      req.user = payload;
       return next();
     } else {
       return next();
