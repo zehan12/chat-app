@@ -84,11 +84,34 @@ const spawnGroupChannel = async (req, res, next) => {
       .populate("users", "-password")
       .populate("groupAdmin", "-password")
       .lean();
-    console.log(fetchFullGroupConversation,"here")
     return res.status(200).json(fetchFullGroupConversation);
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }
 };
 
-module.exports = { createOrRetrieveChat, fetchUsersChat, spawnGroupChannel };
+const amendGroupName = async (req, res, next) => {
+  const { chatName, chatId } = req.body;
+  const updateGroupName = Chat.findByIdAndUpdate(
+    chatId,
+    { chatName },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+
+  if (!updateGroupName) {
+    return res.status(401).json({ message: "chat not found" });
+  } else {
+    return res
+      .status(200)
+      .json({ message: "group name changed", updateGroupName });
+  }
+};
+
+module.exports = {
+  createOrRetrieveChat,
+  fetchUsersChat,
+  spawnGroupChannel,
+  amendGroupName,
+};
