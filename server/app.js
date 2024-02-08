@@ -20,9 +20,9 @@ app.get("/", (req, res) => {
   res.send("Hello from backend");
 });
 
-app.get("/api/chat", (req, res) => {
-  res.status(200).json({ chats });
-});
+// app.get("/api/chat", (req, res) => {
+//   res.status(200).json({ chats });
+// });
 
 app.get("/api/chat/:chatId", (req, res) => {
   const { chatId } = req.params;

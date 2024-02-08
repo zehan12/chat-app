@@ -109,9 +109,49 @@ const amendGroupName = async (req, res, next) => {
   }
 };
 
-module.exports = {
+const addMemberToGroup = async (req, res, next) => {
+  const { userId, chatId } = req.body;
+  const addedUser = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $push: { users: userId },
+    },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+  if (!addedUser) {
+    return res.status(400).json({ message: "error while adding user" });
+  }
+  return res.status(201).json({ message: "user added to group", addedUser });
+};
+
+const ejectGroupMember = async (req, res, next) => {
+  const { userId, chatId } = req.body;
+  const removedUser = await Chat.findByIdAndUpdate(
+    chatId,
+    {
+      $pull: { users: userId },
+    },
+    { new: true }
+  )
+    .populate("users", "-password")
+    .populate("groupAdmin", "-password");
+  if (!removedUser) {
+    return res.status(400).json({ message: "error while removing user" });
+  }
+  return res
+    .status(201)
+    .json({ message: "user removed from group", removedUser });
+};
+
+const chatController = {
   createOrRetrieveChat,
   fetchUsersChat,
   spawnGroupChannel,
   amendGroupName,
+  addMemberToGroup,
+  ejectGroupMember,
 };
+
+module.exports = chatController;
