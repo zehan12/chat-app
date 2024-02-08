@@ -92,7 +92,7 @@ const spawnGroupChannel = async (req, res, next) => {
 
 const amendGroupName = async (req, res, next) => {
   const { chatName, chatId } = req.body;
-  const updateGroupName = Chat.findByIdAndUpdate(
+  const updateGroupName = await Chat.findByIdAndUpdate(
     chatId,
     { chatName },
     { new: true }
