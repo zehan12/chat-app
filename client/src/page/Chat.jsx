@@ -20,7 +20,6 @@ const Chat = () => {
 
   return (
     <div className="bg-background h-screen">
-      <h1 className="text-foreground">chat</h1>
       {user && <SideDrawer />}
     </div>
   );
