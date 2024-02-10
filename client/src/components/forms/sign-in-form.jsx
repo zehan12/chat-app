@@ -3,6 +3,7 @@ import axios from "axios";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { ChatState } from "@/context/chat.provider";
 
 const SignInForm = () => {
   const [user, setUser] = useState({
@@ -10,20 +11,21 @@ const SignInForm = () => {
     password: "",
   });
 
+  const context = ChatState();
+
+
   const handleLoginUser = async () => {
-    const response = await axios.post("http://localhost:3000/api/auth/login",{
-        body:JSON.stringify(user)
-    });
+    const response = await axios.post(
+      "http://localhost:3000/api/auth/login",
+      user
+    );
+    context.setUserToLocalStorage(response.data.user);
     console.log(response);
-}
+  };
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
     setUser((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = () => {
-    console.log(user);
   };
 
   useEffect(() => {
@@ -33,24 +35,27 @@ const SignInForm = () => {
   return (
     <>
       <Label>Email</Label>
-      <br />
       <Input
-        className="text-white"
+        className="text-foreground"
         name="email"
         type="email"
         placeholder="email"
         onChange={handleChange}
       />
       <Label>Password</Label>
-      <br />
       <Input
-        className="text-white"
+        className="text-foreground"
         name="password"
         type="password"
         placeholder="password"
         onChange={handleChange}
       />
-      <Button className="hover:bg-green-700" onClick={handleLoginUser}>submit</Button>
+      <Button
+        className="hover:bg-green-500 hover:text-white"
+        onClick={handleLoginUser}
+      >
+        submit
+      </Button>
     </>
   );
 };

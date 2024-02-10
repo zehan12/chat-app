@@ -37,7 +37,7 @@ const OAuthSignIn = () => {
             const Icon = Icons[provider.icon];
             return (
               <Button
-                className={`text-white flex ${provider.color}`}
+                className={`text-white dark:text-black flex ${provider.color}`}
               >
                 <Icon className="mr-2 size-4" aria-hidden="true" />
                 {provider.name}

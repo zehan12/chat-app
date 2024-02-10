@@ -4,7 +4,7 @@ import { AspectRatio } from "../../components/ui/aspect-ratio";
 const AuthLayout = () => {
   return (
     <>
-      <div className="grid min-h-screen grid-cols-1 overflow-hidden md:grid-cols-3 lg:grid-cols-2">
+      <div className="bg-background grid min-h-screen grid-cols-1 overflow-hidden md:grid-cols-3 lg:grid-cols-2">
         <AspectRatio ratio={16 / 9}>
           <img
             src="/images/auth-layout.webp"

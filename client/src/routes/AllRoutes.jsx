@@ -10,9 +10,10 @@ const AllRoutes = () => {
     <Routes>
       <Route path="/" exact element={<Home />} />
       <Route path="/chat" element={<Chat />} />
-      <Route path="/auth" element={<AuthLayout />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
+      <Route element={<AuthLayout />}>
+        <Route path="signin" element={<SignIn />} />
+        <Route path="signup" element={<SignUp />} />
+      </Route>
     </Routes>
   );
 };

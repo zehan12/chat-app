@@ -8,14 +8,14 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import OAuthSignIn from "@/components/shared/OAuthSignIn";
-import SignInForm from "@/components/forms/sign-in--form";
+import SignInForm from "@/components/forms/sign-in-form";
 
 export default function SignIn() {
 
 
   return (
     <>
-      <Card className="w-8/12 bg-zinc-950 dark:bg-white">
+      <Card className="w-8/12 bg-background text-foreground">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl text-white">Sign in</CardTitle>
           <CardDescription>
@@ -29,7 +29,7 @@ export default function SignIn() {
               <span className="w-full border-t" />
             </div>
             <div className="relative flex justify-center text-xs uppercase">
-              <span className="bg-zinc-950  px-2 text-muted-foreground">
+              <span className="bg-background  px-2 text-muted-foreground">
                 Or continue with
               </span>
             </div>
