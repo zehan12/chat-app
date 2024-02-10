@@ -19,7 +19,7 @@ export function App() {
               <TailwindIndicator />
             </body>
           </ChatProvider>
-          <ThemeToggle />
+          {/* <ThemeToggle /> */}
         </ThemeProvider>
       </Router>
     </>
