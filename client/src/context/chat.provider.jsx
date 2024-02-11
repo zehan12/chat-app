@@ -8,6 +8,8 @@ const ChatContext = createContext();
 const ChatProvider = ({ children }) => {
   const navigate = useNavigate();
   const [user, setUser] = useState();
+  const [selectedChats, setSelectedChats] = useState();
+  const [chats, setChats] = useState();
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("userInfo"));
@@ -20,10 +22,21 @@ const ChatProvider = ({ children }) => {
     if (!user) {
       localStorage.setItem("userInfo", JSON.stringify(userInfo));
     }
+    return;
   };
 
   return (
-    <ChatContext.Provider value={{ user, setUser, setUserToLocalStorage }}>
+    <ChatContext.Provider
+      value={{
+        user,
+        setUser,
+        setUserToLocalStorage,
+        selectedChats,
+        setSelectedChats,
+        chats,
+        setChats,
+      }}
+    >
       {children}
     </ChatContext.Provider>
   );
