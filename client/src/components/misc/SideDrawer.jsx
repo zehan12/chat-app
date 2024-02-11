@@ -15,6 +15,10 @@ import {
   DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
 import Profile from "./Profile";
+import { Sheet, SheetTrigger } from "../ui/sheet";
+import Drawer from "./Drawer";
+import axios from "axios";
+import { ChatState } from "@/context/chat.provider";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState();
@@ -22,16 +26,46 @@ const SideDrawer = () => {
   const [loading, setLoading] = useState();
   const [loadingChat, setLoadingChat] = useState();
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+  const { user } = ChatState();
 
-  const handleDrawerClose = () => {};
+  const handleSearchUsers = async (e) => {
+    const searchParam = e.target.value;
+    setLoading(true);
+    try {
+      const response = await axios.get(
+        `http://localhost:3000/api/user?search=${searchParam}`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      );
+      setSearchResult(response.data);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <>
       <div>
         <div className="w-full flex justify-between items-center bg-background p-1 px-6">
-          <Tooltip text="Search Users for Chat">
-            <Search />
-            <Button variant="ghost">Search User</Button>
-          </Tooltip>
+          <Sheet>
+            <SheetTrigger>
+              <Tooltip text="Search Users for Chat">
+                <Search />
+                <Button variant="ghost">Search User</Button>
+              </Tooltip>
+            </SheetTrigger>
+            <Drawer
+              searchResult={searchResult}
+              handleSearchUsers={handleSearchUsers}
+              loading={loading}
+            />
+          </Sheet>
           <div className="flex justify-center items-center gap-2">
             <Bell />
             <Profile
@@ -80,7 +114,6 @@ const SideDrawer = () => {
             <ThemeToggle />
           </div>
         </div>
-        <div className="fixed z-40 h-screen p-4 overflow-y-auto bg-amber-400/90 text-foreground w-56 left"></div>
       </div>
     </>
   );
