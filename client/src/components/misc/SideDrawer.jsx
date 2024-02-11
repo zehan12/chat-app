@@ -14,12 +14,15 @@ import {
   DropdownMenuGroup,
   DropdownMenuShortcut,
 } from "../ui/dropdown-menu";
+import Profile from "./Profile";
 
 const SideDrawer = () => {
   const [search, setSearch] = useState();
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState();
   const [loadingChat, setLoadingChat] = useState();
+  const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
+
   const handleDrawerClose = () => {};
   return (
     <>
@@ -31,6 +34,10 @@ const SideDrawer = () => {
           </Tooltip>
           <div className="flex justify-center items-center gap-2">
             <Bell />
+            <Profile
+              open={isProfileDialogOpen}
+              setIsOpen={setIsProfileDialogOpen}
+            />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className="w-9" variant="ghost">
@@ -44,7 +51,9 @@ const SideDrawer = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem
+                    onSelect={() => setIsProfileDialogOpen(true)}
+                  >
                     Profile
                     <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                   </DropdownMenuItem>
