@@ -1,15 +1,18 @@
-const UserCard = ({ email, avatar, name }) => {
+const UserCard = ({ id, email, avatar, name, getUserChat }) => {
   return (
     <>
-      <section class="mb-2 border bg-background p-2 rounded-lg max-w-full cursor-pointer">
-        <div class="mx-auto">
-          <div class="card md:flex gap-3 max-w-lg">
-            <div class="w-14 h-14 mx-auto flex-shrink-0">
-              <img class="object-cover rounded-full" src={avatar} />
+      <section
+        onClick={() => getUserChat(id)}
+        className="mb-2 border bg-background p-2 rounded-lg max-w-full cursor-pointer"
+      >
+        <div className="mx-auto">
+          <div className="card md:flex gap-3 max-w-lg">
+            <div className="w-14 h-14 mx-auto flex-shrink-0">
+              <img className="object-cover rounded-full" src={avatar} />
             </div>
-            <div class="flex-grow text-center md:text-left">
-              <p class="font-bold">{email}</p>
-              <h3 class="text-md heading">{name}</h3>
+            <div className="flex-grow text-center md:text-left">
+              <p className="font-bold">{email}</p>
+              <h3 className="text-md heading">{name}</h3>
             </div>
           </div>
         </div>
