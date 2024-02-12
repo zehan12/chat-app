@@ -3,14 +3,14 @@ import {
   SheetDescription,
   SheetHeader,
   SheetTitle,
+  SheetClose,
 } from "../ui/sheet";
 import { Search } from "lucide-react";
 import { Input } from "../ui/input";
 import UserCard from "./UserCard";
 import UserCardSkeleton from "../skeleton/UserCardSkeleton";
 
-const arrayOf10Element = [...Array(10).keys()];
-const Drawer = ({ handleSearchUsers, searchResult, loading }) => {
+const Drawer = ({ handleSearchUsers, searchResult, loading, getUserChat }) => {
   return (
     <>
       <SheetContent
@@ -36,13 +36,20 @@ const Drawer = ({ handleSearchUsers, searchResult, loading }) => {
         <br />
         <div>
           <h1>Results</h1>
-          {Array.isArray(searchResult) && searchResult.length > 0 ? (
-            searchResult.map(({ id, email, avatar, name }) => (
-              <UserCard key={id} email={email} avatar={avatar} name={name} />
-            ))
-          ) : (
-            searchResult.length !== 0 && <p>No results found.</p>
-          )}
+          {Array.isArray(searchResult) && searchResult.length > 0
+            ? searchResult.map(({ _id, email, avatar, name }) => (
+                <SheetClose asChild>
+                  <UserCard
+                    key={_id}
+                    id={_id}
+                    email={email}
+                    avatar={avatar}
+                    name={name}
+                    getUserChat={getUserChat}
+                  />
+                </SheetClose>
+              ))
+            : searchResult.length !== 0 && <p>No results found.</p>}
           {loading &&
             Array.from({ length: 10 }).map((_, index) => (
               <UserCardSkeleton key={index} />

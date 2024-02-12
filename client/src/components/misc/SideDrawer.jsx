@@ -26,26 +26,52 @@ const SideDrawer = () => {
   const [loading, setLoading] = useState();
   const [loadingChat, setLoadingChat] = useState();
   const [isProfileDialogOpen, setIsProfileDialogOpen] = useState(false);
-  const { user } = ChatState();
+  const { user, setSelectedChats, chats, setChats } = ChatState();
 
   const handleSearchUsers = async (e) => {
     const searchParam = e.target.value;
     setLoading(true);
     try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
       const response = await axios.get(
         `http://localhost:3000/api/user?search=${searchParam}`,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${user.token}`,
-          },
-        }
+        config
       );
       setSearchResult(response.data);
     } catch (error) {
       console.error("Error fetching search results:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const getUserChat = async (userId) => {
+    try {
+      setLoadingChat(true);
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `http://localhost:3000/api/chat/`,
+        { userId },
+        config
+      );
+
+      console.log(data, "chats");
+      if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChats(data);
+      setLoadingChat(false);
+    } catch (err) {
+    } finally {
+      setLoadingChat(false);
     }
   };
 
@@ -61,6 +87,7 @@ const SideDrawer = () => {
               </Tooltip>
             </SheetTrigger>
             <Drawer
+              getUserChat={getUserChat}
               searchResult={searchResult}
               handleSearchUsers={handleSearchUsers}
               loading={loading}
