@@ -3,6 +3,7 @@ import { ChatState } from "@/context/chat.provider";
 import { useEffect, useState } from "preact/hooks";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
+import { getSender } from "@/utils/chat.utils";
 
 const MyChats = () => {
   const {
@@ -49,15 +50,24 @@ const MyChats = () => {
           <div className="flex justify-between items-center px-4 py-6">
             <h1 className="text-3xl">My Chats</h1>
             <Button variant="default">
-              New Group Chat
-              {" "}
-              <Plus size={16} />
+              New Group Chat <Plus size={16} />
             </Button>
           </div>
           <div className="flex flex-col overflow-y-hidden">
-            {chats.map((chat)=>(<div key={chat.id}>
-              <h4>{chat.chatName} {"  "} {chat.users}</h4>
-            </div>))}
+            {chats.map((chat) => (
+              <div
+                key={chat.id}
+                className={`${
+                  selectedChats === chat ? "bg-green-400 text-red-700" : ""
+                } `}
+              >
+                <h4>
+                  {!chat.isGroupChat
+                    ? getSender(loggedUser, chat.users)
+                    : chat.chatName}
+                </h4>
+              </div>
+            ))}
           </div>
         </div>
       </div>
