@@ -4,6 +4,8 @@ import { useEffect, useState } from "preact/hooks";
 import { Button } from "../ui/button";
 import { Plus } from "lucide-react";
 import { getSender } from "@/utils/chat.utils";
+import { DropdownMenuItem } from "../ui/dropdown-menu";
+import GroupChatModal from "./GroupChatModal";
 
 const MyChats = () => {
   const {
@@ -17,6 +19,7 @@ const MyChats = () => {
   } = ChatState();
 
   const [loggedUser, setLoggedUser] = useState();
+  const [isGroupChatOpen, setIsGroupChatOpen] = useState(false);
 
   const fetchChats = async (userId) => {
     try {
@@ -49,9 +52,15 @@ const MyChats = () => {
         <div className="w-full bg-purple-500">
           <div className="flex justify-between items-center px-4 py-6">
             <h1 className="text-3xl">My Chats</h1>
-            <Button variant="default">
-              New Group Chat <Plus size={16} />
-            </Button>
+            <DropdownMenuItem onSelect={() => setIsGroupChatOpen(true)}>
+              <Button variant="default">
+                New Group Chat <Plus size={16} />
+              </Button>
+              <GroupChatModal
+                open={isGroupChatOpen}
+                setIsOpen={setIsGroupChatOpen}
+              />
+            </DropdownMenuItem>
           </div>
           <div className="flex flex-col overflow-y-hidden">
             {chats.map((chat) => (
