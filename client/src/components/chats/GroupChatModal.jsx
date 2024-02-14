@@ -6,30 +6,32 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from "../ui/dialog";
+import { Button } from "../ui/button";
+import { Input } from "../ui/input";
 
-const GroupChatModal = ({ open, setIsOpen }) => {
+const GroupChatModal = () => {
   return (
     <>
-      <Dialog open={open} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild></DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>View profile</DialogTitle>
-            <DialogDescription>Your profile is here.</DialogDescription>
-          </DialogHeader>
-          <div className="">
-            <div class="w-full flex justify-center">
-                group chat
-            </div>
-          </div>
-          <DialogFooter>
-            <Button type="submit" onClick={() => setIsOpen(false)}>
-              Done
+      <DialogContent className="sm:max-w-md">
+        <DialogHeader>
+          <DialogTitle>Create Group</DialogTitle>
+          <DialogDescription>
+            Add member to the group.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex items-center space-x-2">
+         <Input />
+        </div>
+        <DialogFooter className="sm:justify-start">
+          <DialogClose asChild>
+            <Button type="button" variant="secondary">
+              Close
             </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+          </DialogClose>
+        </DialogFooter>
+      </DialogContent>
     </>
   );
 };
