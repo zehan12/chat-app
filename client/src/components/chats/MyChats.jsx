@@ -49,7 +49,7 @@ const MyChats = () => {
   return (
     <>
       <div className={`${selectedChats ? "flex" : "hidden"} w-full md:flex`}>
-        <div className="w-full bg-purple-500">
+        <div className="w-full min-h-screen bg-purple-500">
           <div className="flex justify-between items-center px-4 py-6">
             <h1 className="text-3xl">My Chats</h1>
             <Dialog>
@@ -74,7 +74,6 @@ const MyChats = () => {
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
                 </h4>
-                <p>{chat.email}</p>
               </div>
             ))}
           </div>
