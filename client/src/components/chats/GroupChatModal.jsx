@@ -10,9 +10,10 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { ChatState } from "@/context/chat.provider";
 import axios from "axios";
+import UserBadge from "../users/UserBadge";
 
 const GroupChatModal = () => {
   const { user } = ChatState();
@@ -49,13 +50,22 @@ const GroupChatModal = () => {
     }
   };
 
-  const handleGroupChat = async (userToAdd) => {
-    if (selectedUsers.included(userToAdd)) {
+  const handleAddUser = async (userToAdd) => {
+    if (selectedUsers.includes(userToAdd)) {
       console.log("user already selected");
+      return;
     }
-    return;
-
+    setSelectedUsers([...selectedUsers, userToAdd]);
   };
+
+  const handleRemoveUser = async (id) => {
+    const filteredArr = selectedUsers.filter((user) => id !== user._id);
+    setSelectedUsers(filteredArr);
+  };
+  
+  useEffect(() => {
+    console.log(selectedUsers);
+  }, [selectedUsers]);
 
   return (
     <>
@@ -78,13 +88,21 @@ const GroupChatModal = () => {
             />
           </div>
           <br />
+          <div className="w-full h-10 flex justify-start flex-wrap gap-3">
+            {selectedUsers.map((user) => (
+              <UserBadge
+                onClick={handleRemoveUser}
+                id={user._id}
+                name={user.name}
+              />
+            ))}
+          </div>
           <div className="h-10 bg-red-800 w-full overflow-y-auto">
-            {selectedUsers.map((user)=>(<></>))}
             {loading ? (
               <p>Loading...</p>
             ) : (
               searchResult?.slice(0, 4).map((user) => (
-                <div onClick={() => handleGroupChat(user)}>
+                <div onClick={() => handleAddUser(user)}>
                   {user.name}
                   {user.email}
                 </div>
