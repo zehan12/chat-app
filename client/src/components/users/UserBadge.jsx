@@ -8,7 +8,7 @@ const UserBadge = memo(({ id, name, onClick }) => {
   const [backgroundColor, setBackgroundColor] = useState(getRandomColor());
 
   useEffect(() => {
-    setBackgroundColor(randomColor());
+    setBackgroundColor(getRandomColor());
   }, [id]);
 
   return (
