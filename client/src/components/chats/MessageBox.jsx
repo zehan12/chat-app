@@ -10,9 +10,8 @@ const MessageBox = ({ fetchAgain, setFetchAgain }) => {
       <div
         className={`${
           selectedChats ? "flex" : "hidden"
-        } w-full h-screen md:flex bg-rose-700`}
+        } w-full h-screen md:flex justify-center items-center bg-rose-700`}
       >
-        <div>message box</div>
         <SingleChat fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
       </div>
     </>
