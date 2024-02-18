@@ -1,6 +1,5 @@
 import { createContext } from "preact";
-import { useContext } from "preact/hooks";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useState, useContext } from "preact/hooks";
 import { useNavigate } from "react-router-dom";
 
 const ChatContext = createContext();

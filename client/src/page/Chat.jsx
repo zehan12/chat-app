@@ -7,25 +7,17 @@ import MyChats from "@/components/chats/MyChats";
 import MessageBox from "@/components/chats/MessageBox";
 
 const Chat = () => {
-  const [chats, setChats] = useState(null);
-
+  const [fetchAgain, setFetchAgain] = useState(false);
   const { user } = ChatState();
-
-  // useEffect(() => {
-  //   const fetchChats = async () => {
-  //     const response = await axios.get("http://localhost:3000/api/chat");
-  //     setChats(response.data.chats);
-  //   };
-
-  //   fetchChats();
-  // }, []);  const [sheetOpen, setSheetOpen] = useState(false);
 
   return (
     <div className="bg-background h-screen">
       {user && <SideDrawer />}
       <div className="flex justify-evenly items-center">
-        {user && <MyChats />}
-        {user && <MessageBox />}
+        {user && <MyChats fetchAgain={fetchAgain} />}
+        {user && (
+          <MessageBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
+        )}
       </div>
     </div>
   );

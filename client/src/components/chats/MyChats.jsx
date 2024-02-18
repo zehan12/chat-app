@@ -7,7 +7,7 @@ import { getSender } from "@/utils/chat.utils";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import GroupChatModal from "./GroupChatModal";
 
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const {
     chats,
     selectedChats,
@@ -44,7 +44,7 @@ const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
 
   console.log(chats, "chats", loggedUser);
   return (
@@ -58,7 +58,10 @@ const MyChats = () => {
               onOpenChange={setCreateGroupChatOpen}
             >
               <DialogTrigger>
-                <Button variant="default" onSelect={()=>setCreateGroupChatOpen(true)}>
+                <Button
+                  variant="default"
+                  onSelect={() => setCreateGroupChatOpen(true)}
+                >
                   New Group Chat <Plus size={16} />
                 </Button>
               </DialogTrigger>
