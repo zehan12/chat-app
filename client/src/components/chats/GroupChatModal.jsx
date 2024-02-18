@@ -15,8 +15,8 @@ import { ChatState } from "@/context/chat.provider";
 import axios from "axios";
 import UserBadge from "../users/UserBadge";
 
-const GroupChatModal = () => {
-  const { user } = ChatState();
+const GroupChatModal = ({ setClose }) => {
+  const { user, chats, setChats } = ChatState();
   const [groupName, setGroupName] = useState("");
   const [usersList, setUsersList] = useState([]);
   const [search, setSearch] = useState("");
@@ -62,7 +62,34 @@ const GroupChatModal = () => {
     const filteredArr = selectedUsers.filter((user) => id !== user._id);
     setSelectedUsers(filteredArr);
   };
-  
+
+  const handleCreateGroup = async () => {
+    if (!groupName || !selectedUsers) {
+      console.log("fill all  details");
+    }
+
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const usersArray = selectedUsers.map((user) => user._id);
+      const { data } = await axios.post(
+        `http://localhost:3000/api/chat/group`,
+        {
+          name: groupName,
+          users: JSON.stringify(usersArray),
+        },
+        config
+      );
+      setChats([data, ...chats]);
+      setClose(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     console.log(selectedUsers);
   }, [selectedUsers]);
@@ -77,7 +104,10 @@ const GroupChatModal = () => {
         <div className="flex flex-col items-center space-x-2">
           <div className="w-full flex flex-col gap-2">
             <h3>Group Name</h3>
-            <Input placeholder="Enter Group Name" />
+            <Input
+              onChange={(e) => setGroupName(e.target.value)}
+              placeholder="Enter Group Name"
+            />
           </div>
           <br />
           <div className="w-full flex flex-col gap-2">
@@ -85,6 +115,9 @@ const GroupChatModal = () => {
             <Input
               placeholder="Add User"
               onChange={(e) => handleSearch(e.target.value)}
+              onKeyup={(e)=>{
+                
+              }} 
             />
           </div>
           <br />
@@ -101,7 +134,7 @@ const GroupChatModal = () => {
             {loading ? (
               <p>Loading...</p>
             ) : (
-              searchResult?.slice(0, 4).map((user) => (
+              searchResult?.map((user) => (
                 <div onClick={() => handleAddUser(user)}>
                   {user.name}
                   {user.email}
@@ -117,7 +150,12 @@ const GroupChatModal = () => {
             </Button>
           </DialogClose>
           <div className="w-full">
-            <Button className="w-full" type="button" variant="secondary">
+            <Button
+              onClick={handleCreateGroup}
+              className="w-full"
+              type="button"
+              variant="secondary"
+            >
               Create
             </Button>
           </div>

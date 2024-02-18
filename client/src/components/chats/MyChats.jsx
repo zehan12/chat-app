@@ -19,6 +19,7 @@ const MyChats = () => {
   } = ChatState();
 
   const [loggedUser, setLoggedUser] = useState();
+  const [isCreateGroupChatOpen, setCreateGroupChatOpen] = useState(false);
 
   const fetchChats = async (userId) => {
     try {
@@ -45,20 +46,23 @@ const MyChats = () => {
     fetchChats();
   }, []);
 
-  console.log(chats,"chats",loggedUser)
+  console.log(chats, "chats", loggedUser);
   return (
     <>
       <div className={`${selectedChats ? "flex" : "hidden"} w-full md:flex`}>
         <div className="w-full min-h-screen bg-purple-500">
           <div className="flex justify-between items-center px-4 py-6">
             <h1 className="text-3xl">My Chats</h1>
-            <Dialog>
+            <Dialog
+              open={isCreateGroupChatOpen}
+              onOpenChange={setCreateGroupChatOpen}
+            >
               <DialogTrigger>
-                <Button variant="default">
+                <Button variant="default" onSelect={()=>setCreateGroupChatOpen(true)}>
                   New Group Chat <Plus size={16} />
                 </Button>
               </DialogTrigger>
-              <GroupChatModal />
+              <GroupChatModal setClose={setCreateGroupChatOpen} />
             </Dialog>
           </div>
           <div className="flex flex-col overflow-y-hidden">
