@@ -21,7 +21,7 @@ const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const [isCreateGroupChatOpen, setCreateGroupChatOpen] = useState(false);
 
-  const fetchChats = async (userId) => {
+  const fetchChats = async () => {
     try {
       const config = {
         headers: {
@@ -46,7 +46,6 @@ const MyChats = ({ fetchAgain }) => {
     fetchChats();
   }, [fetchAgain]);
 
-  console.log(chats, "chats", loggedUser);
   return (
     <>
       <div className={`${selectedChats ? "flex" : "hidden"} w-full md:flex`}>
@@ -71,6 +70,8 @@ const MyChats = ({ fetchAgain }) => {
           <div className="flex flex-col overflow-y-hidden">
             {chats.map((chat) => (
               <div
+                onClick={() => setSelectedChats(chat)}
+                onKeyDown={() => undefined}
                 key={chat.id}
                 className={`${
                   selectedChats === chat ? "bg-green-400 text-red-700" : ""

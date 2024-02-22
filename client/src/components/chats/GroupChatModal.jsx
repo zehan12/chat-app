@@ -1,11 +1,9 @@
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   DialogClose,
 } from "../ui/dialog";
 import { Button } from "../ui/button";
@@ -135,7 +133,7 @@ const GroupChatModal = ({ setClose }) => {
               <p>Loading...</p>
             ) : (
               searchResult?.map((user) => (
-                <div onClick={() => handleAddUser(user)}>
+                <div onClick={() => handleAddUser(user)} onKeyUp={null}>
                   {user.name}
                   {user.email}
                 </div>

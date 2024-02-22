@@ -6,14 +6,12 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "../ui/dialog";
 
 const Profile = ({ open, setIsOpen }) => {
   return (
     <>
       <Dialog open={open} onOpenChange={setIsOpen}>
-        <DialogTrigger asChild></DialogTrigger>
         <DialogContent className="sm:max-w-[425px]">
           <DialogHeader>
             <DialogTitle>View profile</DialogTitle>
