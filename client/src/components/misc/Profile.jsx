@@ -22,7 +22,7 @@ const Profile = ({ open, setIsOpen }) => {
           <div className="">
             <div class="w-full flex justify-center">
               <img
-                class="h-56 w-56 rounded-full object-cover "
+                class="h-56 w-56 rounded-full object-cover transition duration-1000  ease-linear hover:scale-110 hover:rounded-none"
                 src="https://github.com/zehan12.png"
                 alt="pp"
               />

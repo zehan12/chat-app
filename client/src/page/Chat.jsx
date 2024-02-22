@@ -13,7 +13,7 @@ const Chat = () => {
   return (
     <div className="bg-background h-screen">
       {user && <SideDrawer />}
-      <div className="flex justify-evenly items-center">
+      <div className="flex">
         {user && <MyChats fetchAgain={fetchAgain} />}
         {user && (
           <MessageBox fetchAgain={fetchAgain} setFetchAgain={setFetchAgain} />
