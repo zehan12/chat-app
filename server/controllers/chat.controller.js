@@ -116,7 +116,6 @@ const amendGroupName = async (req, res, next) => {
 
 const addMemberToGroup = async (req, res, next) => {
   const { userId, chatId } = req.body;
-  // const
   const addedUser = await Chat.findByIdAndUpdate(
     chatId,
     {
@@ -126,7 +125,6 @@ const addMemberToGroup = async (req, res, next) => {
   )
     .populate("users", "-password")
     .populate("groupAdmin", "-password");
-  console.log(addedUser, "here");
   if (!addedUser) {
     return res.status(400).json({ message: "error while adding user" });
   }

@@ -6,8 +6,7 @@ const verifyUserAuthentication = async (req, res, next) => {
   let token;
   try {
     if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization?.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split("Bearer")[1].trim();
       const payload = await jwt.verify(token, config.jwt.secret);
@@ -26,16 +25,14 @@ const optionalAuthentication = async (req, res, next) => {
   let token = req.headers.authorization;
   try {
     if (
-      req.headers.authorization &&
-      req.headers.authorization.startsWith("Bearer")
+      req.headers.authorization?.startsWith("Bearer")
     ) {
       token = req.headers.authorization.split("Bearer")[1].trim();
       const payload = await jwt.verify(token, config.jwt.secret);
       req.user = payload;
       return next();
-    } else {
-      return next();
     }
+      return next();
   } catch (error) {
     return next(error);
   }
