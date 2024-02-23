@@ -25,13 +25,13 @@ chatRouter.put(
 );
 
 chatRouter.put(
-  "/addToGroup",
+  "/add-to-group",
   verifyUserAuthentication,
   chatController.addMemberToGroup
 );
 
 chatRouter.delete(
-  "/removeGroup",
+  "/remove-from-group",
   verifyUserAuthentication,
   chatController.ejectGroupMember
 );
