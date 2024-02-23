@@ -24,10 +24,26 @@ app.get("/", (req, res) => {
 //   res.status(200).json({ chats });
 // });
 
-app.get("/api/chat/:chatId", (req, res) => {
-  const { chatId } = req.params;
-  const chat = chats.map((chat) => chat._id === chatId);
-  res.status(200).json({ chat });
+// app.get("/api/chat/:chatId", (req, res) => {
+//   const { chatId } = req.params;
+//   const chat = chats.map((chat) => chat._id === chatId);
+//   res.status(200).json({ chat });
+// });
+
+app.get("/", (_, res) => {
+  res.send("Hello from Backend")
+})
+
+// handle unknown routes
+app.all("*", (req, res) => {
+  res.status(404);
+  if (req.accepts("html")) {
+    res.send("<body><h1>PAGE NOT FOUND</h1></body>");
+  } else if (req.accepts("json")) {
+    res.json({ message: "404 Not Found" });
+  } else {
+    res.type("txt").send("404 NOT FOUND");
+  }
 });
 
 module.exports = app;
