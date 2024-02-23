@@ -60,7 +60,7 @@ const SideDrawer = () => {
         },
       };
       const { data } = await axios.post(
-        `http://localhost:3000/api/chat/`,
+        "http://localhost:3000/api/chat/",
         { userId },
         config
       );
@@ -98,6 +98,7 @@ const SideDrawer = () => {
               open={isProfileDialogOpen}
               setIsOpen={setIsProfileDialogOpen}
             />
+            <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button className="w-9" variant="ghost">
@@ -137,7 +138,6 @@ const SideDrawer = () => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-            <ThemeToggle />
           </div>
         </div>
       </div>
