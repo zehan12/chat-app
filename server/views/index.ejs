@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat App Server</title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <span id="link" style="cursor: pointer;">
+      <% if (true) { %> <%= 'guess what to do? just click' %> <% } %>
+    </span>
+    <p id="activity"></p>
+  </body>
+  <script>
+    const linknode = document.querySelector("#link");
+    console.log(linknode,"node")
+    linknode.addEventListener("click", () => {
+      fetch("https://www.boredapi.com/api/activity")
+        .then((res) => res.json())
+        .then((res) => {
+          const textnode = document.querySelector("#activity");
+          console.log(textnode)
+          textnode.textContent = res.activity;
+        });
+    });
+  </script>
+</html>
