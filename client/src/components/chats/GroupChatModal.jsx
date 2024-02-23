@@ -8,7 +8,7 @@ import {
 } from "../ui/dialog";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useEffect, useState } from "preact/hooks";
+import { useState } from "preact/hooks";
 import { ChatState } from "@/context/chat.provider";
 import axios from "axios";
 import UserBadge from "../users/UserBadge";
@@ -16,7 +16,6 @@ import UserBadge from "../users/UserBadge";
 const GroupChatModal = ({ setClose }) => {
   const { user, chats, setChats } = ChatState();
   const [groupName, setGroupName] = useState("");
-  const [usersList, setUsersList] = useState([]);
   const [search, setSearch] = useState("");
   const [searchResult, setSearchResult] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -58,6 +57,7 @@ const GroupChatModal = ({ setClose }) => {
 
   const handleRemoveUser = async (id) => {
     const filteredArr = selectedUsers.filter((user) => id !== user._id);
+    console.log(filteredArr,"false coming from here")
     setSelectedUsers(filteredArr);
   };
 
@@ -87,10 +87,6 @@ const GroupChatModal = ({ setClose }) => {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    console.log(selectedUsers);
-  }, [selectedUsers]);
 
   return (
     <>

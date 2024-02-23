@@ -34,7 +34,7 @@ const MyChats = ({ fetchAgain }) => {
         config
       );
       setChats(data);
-      console.log(data);
+      console.log(data,"fetch chats from my chats");
     } catch (err) {
       console.log(err);
     } finally {

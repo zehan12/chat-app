@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {
-  console.log(req.method, req.url, req.body);
+  console.log(req.method, req.url, req.body, req.users);
   next();
 });
 
@@ -34,7 +34,6 @@ app.use("/api/chat", require("./routes/chat.route"));
 
 app.get("/", (req, res) => {
   const title = "hello from backend";
-  console.log(req)
   res.render("index",{title});
 });
 

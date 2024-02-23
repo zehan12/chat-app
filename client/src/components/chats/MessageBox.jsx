@@ -3,7 +3,7 @@ import SingleChat from "./SingleChat";
 
 const MessageBox = ({ fetchAgain, setFetchAgain }) => {
   const { selectedChats } = ChatState();
-  console.log(selectedChats, "selected-chats");
+  console.log(selectedChats, "selected-chats in Message box");
 
   return (
     <>
