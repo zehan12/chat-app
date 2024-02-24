@@ -1,10 +1,11 @@
 const express = require("express");
 const cors = require("cors");
-const path = require('node:path');
-const { Readable } = require('node:stream');
-const chats = require("./data/dummyChat");
+const path = require("node:path");
+const { logger } = require("./middlewares/logger");
+// const chats = require("./data/dummyChat");
 const app = express();
 
+app.use(logger);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -15,8 +16,8 @@ app.use((req, res, next) => {
 });
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
 
 app.use("/api/auth", require("./routes/auth.route"));
 app.use("/api/user", require("./routes/user.route"));
@@ -34,7 +35,7 @@ app.use("/api/chat", require("./routes/chat.route"));
 
 app.get("/", (req, res) => {
   const title = "hello from backend";
-  res.render("index",{title});
+  res.render("index", { title });
 });
 
 // handle unknown routes
